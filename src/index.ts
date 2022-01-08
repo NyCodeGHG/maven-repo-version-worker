@@ -5,7 +5,7 @@ addEventListener('fetch', async (event) => {
   const group = url.searchParams.get('group')?.replace('.', '/');
   const module = url.searchParams.get('module')?.replace('.', '/');
   if (!group || !module) {
-    const exampleUrl = `${url.protocol}//${url.origin}/?group=dev.kord&module=kord-core`;
+    const exampleUrl = `${url.origin}/?group=dev.kord&module=kord-core`;
     event.respondWith(new Response('<p>Provide maven group and module in the url parameters.</p>' +
       `Example: <a href="${exampleUrl}">${exampleUrl}</a>`, {
       status: 400,
