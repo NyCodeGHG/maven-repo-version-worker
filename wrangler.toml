@@ -1,0 +1,12 @@
+name = "maven-repo-version-worker"
+type = "javascript"
+zone_id = ""
+account_id = "82758a83eb971497ed2c8171439a1ad5"
+route = ""
+workers_dev = true
+compatibility_date = "2022-01-08"
+
+[build]
+command = "npm install && npm run build"
+[build.upload]
+format = "service-worker"
