@@ -15,17 +15,23 @@ addEventListener('fetch', async (event) => {
     }));
     return;
   }
-
   event.respondWith(handle(event, group, module));
 });
 
 async function handle(event: FetchEvent, group: string, module: string): Promise<Response> {
   const mavenMetadataUrl = `https://repo1.maven.org/maven2/${group}/${module}/maven-metadata.xml`;
-  const xml = await fetch(mavenMetadataUrl).then(response => response.text());
+  const response = await fetch(mavenMetadataUrl, {});
+  
+  if (response.status != 200) {
+    // Maven Artifact does not exist.
+    return new Response(`${group}/${module} does not exist!`, {
+      status: 400
+    });
+  }
+  const xml = await response.text();
   const metadata: any = await xml2js(xml);
   return new Response(metadata.metadata.versioning[0].latest[0]);
 }
-
 
 function xml2js(xml: string): Promise<string> {
   return new Promise((resolve, reject) => {
